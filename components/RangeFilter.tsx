@@ -22,7 +22,7 @@ const RangeFilter: React.FC<RangeFilterProps> = ({ title, icon, filterKey }) => 
 
   return (
     <div className="bg-brand-neutral-1 border border-brand-neutral-5 rounded-3xl px-8 py-7 min-w-[180px]">
-      <div className="flex items-center mb-7 gap-8 pl-6">
+      <div className="flex items-center mb-8 gap-8 pl-6">
         {icon && icon}
         <h2 className="text-3xl text-brand-white">{title}</h2>
       </div>

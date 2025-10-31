@@ -5,7 +5,7 @@ const AdminchatFilter = () => {
   const { adminChats, adminChatsChannels, updateFilters } = useFiltersStore();
   return (
     <div className="bg-brand-neutral-1 border border-brand-neutral-5 rounded-3xl px-8 py-7 min-w-[180px]">
-      <div className="flex items-center mb-7 gap-8 pl-6">
+      <div className="flex items-center mb-8 gap-8 pl-6">
         {/* {icon && icon} */}
         <svg xmlns="http://www.w3.org/2000/svg" width={42} height={42} viewBox="0 0 42 42" fill="none">
           <path d="M37.5985 8.04406L34.421 7.66122L26.3629 0V6.69039L5.59775 4.1888C4.17928 4.01793 2.75194 4.4636 1.68275 5.4117C0.613478 6.35989 0.000215458 7.72332 0.000215458 9.15237V16.5637C0.952347 15.7506 2.13433 15.1935 3.44436 15.0137L31.8769 11.1099C32.1796 11.0683 32.4886 11.0471 32.7947 11.0471C34.4229 11.0471 35.9957 11.6367 37.2234 12.7072C38.6916 13.9876 39.5336 15.8391 39.5336 17.787V23.4644C39.9546 23.2167 40.3412 22.9072 40.6788 22.5405C41.5308 21.615 42 20.4124 42 19.1545V13.0076C42 10.4802 40.1077 8.34634 37.5985 8.04406Z" fill="#9F9F9F" />

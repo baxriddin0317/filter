@@ -5,7 +5,7 @@ export interface Range {
   max: number;
 }
 
-export type IChoose = 'Не важно' | 'Есть' | 'Нет';
+export type IChoose = 'Не важно' | 'Есть' | 'Нет' | 'Разрешить гео-спамблок' | 'Осталось дней до конца премиума...';
 
 export interface FiltersState {
   searchString: string;
@@ -27,12 +27,15 @@ export interface FiltersState {
   channelsAndChatsChannels: Range;
   channelsAndChatsChats: Range;
   premium: IChoose;
+  premiumDaysRemaining: number;
   spamblock: IChoose;
   two_fa: IChoose;
   with_admin_channels: IChoose;
   orderBy: string;
   orderType: string;
   selectedCountries: string[];
+  selectedOrigins: string[];
+  excludedCountries: string[];
   isFiltersChanged: boolean;
   seller_username: string;
   // UI state
@@ -62,12 +65,15 @@ const defaultState = {
   channelsAndChatsChannels: { min: 0, max: 0 },
   channelsAndChatsChats: { min: 0, max: 0 },
   premium: 'Не важно' as IChoose,
+  premiumDaysRemaining: 0,
   spamblock: 'Не важно' as IChoose,
   two_fa: 'Не важно' as IChoose,
   with_admin_channels: 'Не важно' as IChoose,
   orderBy: '',
   orderType: '',
   selectedCountries: [],
+  selectedOrigins: [],
+  excludedCountries: [],
   isFiltersChanged: false,
   seller_username: '',
   showFilters: true,
