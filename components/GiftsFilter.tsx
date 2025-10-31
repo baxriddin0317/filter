@@ -17,11 +17,11 @@ const GiftsFilter: React.FC = () => {
         <div className="flex items-center gap-2 text-2xl">
           <input
             type="number"
-            placeholder="Каналов, от"
+            placeholder="Обычных, от"
             className="h-16 max-w-[234px] w-full border border-brand-neutral-4 bg-brand-neutral text-2xl text-brand-gray-2 outline-none rounded-5xl pl-7"
             min={0}
-            value={channels.min == 0 ? '' : channels.min}
-            onChange={e => updateFilters({ channels: { ...channels, min: +e.target.value } })}
+            value={giftsRegular.min == 0 ? '' : giftsRegular.min}
+            onChange={e => updateFilters({ giftsRegular: { ...giftsRegular, min: +e.target.value } })}
           />
           <span className="block w-5 h-0.5 bg-brand-gray-2"></span>
           <input
@@ -29,27 +29,27 @@ const GiftsFilter: React.FC = () => {
             placeholder="До"
             className="h-16 max-w-[234px] w-full border border-brand-neutral-4 bg-brand-neutral text-2xl text-brand-gray-2 outline-none rounded-5xl pl-7"
             min={0}
-            value={channels.max == 0 ? '' : channels.max}
-            onChange={e => updateFilters({ channels: { ...channels, max: +e.target.value } })}
+            value={giftsRegular.max == 0 ? '' : giftsRegular.max}
+            onChange={e => updateFilters({ giftsRegular: { ...giftsRegular, max: +e.target.value } })}
           />
         </div>
         <div className="flex items-center gap-2 text-2xl">
           <input
             type="number"
-            placeholder="Чатов, от"
+            placeholder="NFT, от"
             className="h-16 max-w-[234px] w-full border border-brand-neutral-4 bg-brand-neutral text-2xl text-brand-gray-2 outline-none rounded-5xl pl-7"
             min={0}
-            value={channels.min == 0 ? '' : channels.min}
-            onChange={e => updateFilters({ channels: { ...channels, min: +e.target.value } })}
+            value={giftsNft.min == 0 ? '' : giftsNft.min}
+            onChange={e => updateFilters({ giftsNft: { ...giftsNft, min: +e.target.value } })}
           />
           <span className="block w-5 h-0.5 bg-brand-gray-2"></span>
           <input
             type="number"
-            placeholder="Доvv"
+            placeholder="До"
             className="h-16 max-w-[234px] w-full border border-brand-neutral-4 bg-brand-neutral text-2xl text-brand-gray-2 outline-none rounded-5xl pl-7"
             min={0}
-            value={channels.max == 0 ? '' : channels.max}
-            onChange={e => updateFilters({ channels: { ...channels, max: +e.target.value } })}
+            value={giftsNft.max == 0 ? '' : giftsNft.max}
+            onChange={e => updateFilters({ giftsNft: { ...giftsNft, max: +e.target.value } })}
           />
         </div>
       </div>

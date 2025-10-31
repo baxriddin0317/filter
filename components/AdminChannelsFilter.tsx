@@ -3,8 +3,7 @@ import React from "react";
 import { useFiltersStore } from "../store/filtersStore";
 
 const AdminChannelsFilter: React.FC = () => {
-  // Use 'channels' for demo, in a real app likely needs its own field
-  const { channels, updateFilters } = useFiltersStore();
+  const { adminChannels, adminChannelsChats, updateFilters } = useFiltersStore();
   return (
     <div className="bg-brand-neutral-1 border border-brand-neutral-5 rounded-3xl px-8 py-7 min-w-[180px]">
       <div className="flex items-center mb-7 gap-8 pl-6">
@@ -21,8 +20,8 @@ const AdminChannelsFilter: React.FC = () => {
             placeholder="Каналов, от"
             className="h-16 max-w-[234px] w-full border border-brand-neutral-4 bg-brand-neutral text-2xl text-brand-gray-2 outline-none rounded-5xl pl-7"
             min={0}
-            value={channels.min == 0 ? '' : channels.min}
-            onChange={e => updateFilters({ channels: { ...channels, min: +e.target.value } })}
+            value={adminChannels.min == 0 ? '' : adminChannels.min}
+            onChange={e => updateFilters({ adminChannels: { ...adminChannels, min: +e.target.value } })}
           />
           <span className="block w-5 h-0.5 bg-brand-gray-2"></span>
           <input
@@ -30,8 +29,8 @@ const AdminChannelsFilter: React.FC = () => {
             placeholder="До"
             className="h-16 max-w-[234px] w-full border border-brand-neutral-4 bg-brand-neutral text-2xl text-brand-gray-2 outline-none rounded-5xl pl-7"
             min={0}
-            value={channels.max == 0 ? '' : channels.max}
-            onChange={e => updateFilters({ channels: { ...channels, max: +e.target.value } })}
+            value={adminChannels.max == 0 ? '' : adminChannels.max}
+            onChange={e => updateFilters({ adminChannels: { ...adminChannels, max: +e.target.value } })}
           />
         </div>
         <div className="flex items-center gap-2 text-2xl">
@@ -40,17 +39,17 @@ const AdminChannelsFilter: React.FC = () => {
             placeholder="Чатов, от"
             className="h-16 max-w-[234px] w-full border border-brand-neutral-4 bg-brand-neutral text-2xl text-brand-gray-2 outline-none rounded-5xl pl-7"
             min={0}
-            value={channels.min == 0 ? '' : channels.min}
-            onChange={e => updateFilters({ channels: { ...channels, min: +e.target.value } })}
+            value={adminChannelsChats.min == 0 ? '' : adminChannelsChats.min}
+            onChange={e => updateFilters({ adminChannelsChats: { ...adminChannelsChats, min: +e.target.value } })}
           />
           <span className="block w-5 h-0.5 bg-brand-gray-2"></span>
           <input
             type="number"
-            placeholder="Доvv"
+            placeholder="До"
             className="h-16 max-w-[234px] w-full border border-brand-neutral-4 bg-brand-neutral text-2xl text-brand-gray-2 outline-none rounded-5xl pl-7"
             min={0}
-            value={channels.max == 0 ? '' : channels.max}
-            onChange={e => updateFilters({ channels: { ...channels, max: +e.target.value } })}
+            value={adminChannelsChats.max == 0 ? '' : adminChannelsChats.max}
+            onChange={e => updateFilters({ adminChannelsChats: { ...adminChannelsChats, max: +e.target.value } })}
           />
         </div>
       </div>

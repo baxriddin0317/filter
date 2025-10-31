@@ -2,8 +2,7 @@
 import { useFiltersStore } from '@/store/filtersStore';
 
 const AdminchatFilter = () => {
-  // Use 'channels' for demo, in a real app likely needs its own field
-  const { channels, updateFilters } = useFiltersStore();
+  const { adminChats, adminChatsChannels, updateFilters } = useFiltersStore();
   return (
     <div className="bg-brand-neutral-1 border border-brand-neutral-5 rounded-3xl px-8 py-7 min-w-[180px]">
       <div className="flex items-center mb-7 gap-8 pl-6">
@@ -18,11 +17,11 @@ const AdminchatFilter = () => {
         <div className="flex items-center gap-2 text-2xl">
           <input
             type="number"
-            placeholder="Каналов, от"
+            placeholder="Чатов, от"
             className="h-16 max-w-[234px] w-full border border-brand-neutral-4 bg-brand-neutral text-2xl text-brand-gray-2 outline-none rounded-5xl pl-7"
             min={0}
-            value={channels.min == 0 ? '' : channels.min}
-            onChange={e => updateFilters({ channels: { ...channels, min: +e.target.value } })}
+            value={adminChats.min == 0 ? '' : adminChats.min}
+            onChange={e => updateFilters({ adminChats: { ...adminChats, min: +e.target.value } })}
           />
           <span className="block w-5 h-0.5 bg-brand-gray-2"></span>
           <input
@@ -30,27 +29,27 @@ const AdminchatFilter = () => {
             placeholder="До"
             className="h-16 max-w-[234px] w-full border border-brand-neutral-4 bg-brand-neutral text-2xl text-brand-gray-2 outline-none rounded-5xl pl-7"
             min={0}
-            value={channels.max == 0 ? '' : channels.max}
-            onChange={e => updateFilters({ channels: { ...channels, max: +e.target.value } })}
+            value={adminChats.max == 0 ? '' : adminChats.max}
+            onChange={e => updateFilters({ adminChats: { ...adminChats, max: +e.target.value } })}
           />
         </div>
         <div className="flex items-center gap-2 text-2xl">
           <input
             type="number"
-            placeholder="Чатов, от"
+            placeholder="Каналов, от"
             className="h-16 max-w-[234px] w-full border border-brand-neutral-4 bg-brand-neutral text-2xl text-brand-gray-2 outline-none rounded-5xl pl-7"
             min={0}
-            value={channels.min == 0 ? '' : channels.min}
-            onChange={e => updateFilters({ channels: { ...channels, min: +e.target.value } })}
+            value={adminChatsChannels.min == 0 ? '' : adminChatsChannels.min}
+            onChange={e => updateFilters({ adminChatsChannels: { ...adminChatsChannels, min: +e.target.value } })}
           />
           <span className="block w-5 h-0.5 bg-brand-gray-2"></span>
           <input
             type="number"
-            placeholder="Доvv"
+            placeholder="До"
             className="h-16 max-w-[234px] w-full border border-brand-neutral-4 bg-brand-neutral text-2xl text-brand-gray-2 outline-none rounded-5xl pl-7"
             min={0}
-            value={channels.max == 0 ? '' : channels.max}
-            onChange={e => updateFilters({ channels: { ...channels, max: +e.target.value } })}
+            value={adminChatsChannels.max == 0 ? '' : adminChatsChannels.max}
+            onChange={e => updateFilters({ adminChatsChannels: { ...adminChatsChannels, max: +e.target.value } })}
           />
         </div>
       </div>

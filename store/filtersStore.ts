@@ -19,7 +19,9 @@ export interface FiltersState {
   idDigits: Range;
   telegramStars: Range;
   adminChannels: Range;
+  adminChannelsChats: Range;
   adminChats: Range;
+  adminChatsChannels: Range;
   giftsRegular: Range;
   giftsNft: Range;
   channelsAndChatsChannels: Range;
@@ -52,7 +54,9 @@ const defaultState = {
   idDigits: { min: 0, max: 0 },
   telegramStars: { min: 0, max: 0 },
   adminChannels: { min: 0, max: 0 },
+  adminChannelsChats: { min: 0, max: 0 },
   adminChats: { min: 0, max: 0 },
+  adminChatsChannels: { min: 0, max: 0 },
   giftsRegular: { min: 0, max: 0 },
   giftsNft: { min: 0, max: 0 },
   channelsAndChatsChannels: { min: 0, max: 0 },
