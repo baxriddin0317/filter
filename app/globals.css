@@ -44,6 +44,14 @@ body {
   font-family: "Inter", sans-serif;
 }
 
+.scroll-style::-webkit-scrollbar{
+  @apply bg-brand-neutral-1 w-2.5
+}
+
+.scroll-style::-webkit-scrollbar-thumb {
+  @apply bg-[#323232] rounded-full
+}
+
 @font-face {
   font-family: 'Inter';
   src: url('/font/Inter18pt-ExtraLight.woff2') format('woff2'),

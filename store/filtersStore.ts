@@ -35,6 +35,7 @@ export interface FiltersState {
   orderType: string;
   selectedCountries: string[];
   selectedOrigins: string[];
+  selectedMinusOrigins: string[];
   excludedCountries: string[];
   isFiltersChanged: boolean;
   seller_username: string;
@@ -73,6 +74,7 @@ const defaultState = {
   orderType: '',
   selectedCountries: [],
   selectedOrigins: [],
+  selectedMinusOrigins: [],
   excludedCountries: [],
   isFiltersChanged: false,
   seller_username: '',
