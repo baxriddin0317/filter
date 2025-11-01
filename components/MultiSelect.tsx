@@ -155,9 +155,11 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
             const isSelected = selectedValues.includes(item.value);
             const flagEmoji = getFlagEmoji(item.value);
             return (
-              <div
+              <button
+                type="button"
                 key={item.value}
-                className={`w-full px-4 py-3 transition-colors group ${
+                onClick={() => toggleItem(item.value)}
+                className={`w-full px-4 py-3 transition-colors group cursor-pointer ${
                   isSelected ? "" : "hover:bg-[#323232]"
                 }`}
               >
@@ -166,9 +168,7 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
                     {flagEmoji && <img src="/flags/iroq.png" alt="globe" className="w-[18px] inline-block" />}
                     <span className={`text-[28px] group-hover:text-brand-white ${isSelected ? 'text-brand-white' : 'text-[#969696]'}`}>{item.label}</span>
                   </div>
-                  <button
-                    type="button"
-                    onClick={(e) => toggleItem(item.value, e)}
+                  <div
                     className={`items-center gap-2 px-4 h-9 rounded-full transition-colors cursor-pointer ${
                       isSelected
                         ? "flex bg-transparent text-brand-yellow"
@@ -192,9 +192,9 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
                         <span className="block">Выбрать</span>
                       </>
                     )}
-                  </button>
+                  </div>
                 </div>
-              </div>
+              </button>
             );
           })}
         </div>
