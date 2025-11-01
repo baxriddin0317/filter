@@ -2,7 +2,7 @@
 import React from "react";
 import { useFiltersStore, IChoose } from "../store/filtersStore";
 
-const options: IChoose[] = ["Не важно", "Есть", "Нет", "Разрешить гео-спамблок"];
+const options: IChoose[] = ["Не важно", "Есть", "Нет"];
 
 const SpamblockFilter: React.FC = () => {
   const { spamblock, updateFilters } = useFiltersStore();
@@ -29,15 +29,11 @@ const SpamblockFilter: React.FC = () => {
             </button>
           ))}
         </div>
-        <button
-          type="button"
-          onClick={() => updateFilters({ spamblock: "Разрешить гео-спамблок" })}
-          className={`h-16 w-full border text-2xl text-brand-gray-2 outline-none rounded-5xl hover:bg-[#2F2F31] hover:border-[#555] cursor-pointer ${
-            spamblock === "Разрешить гео-спамблок" ? "bg-[#3C3325] border-[#847050] text-[#DDAB71]" : "border-brand-neutral-4 bg-brand-neutral text-brand-gray-2"
-          }`}
-        >
-          Разрешить гео-спамблок
-        </button>
+        <input
+          type="number"
+          className={`h-16 w-full border text-2xl text-brand-gray-2 outline-none rounded-5xl hover:bg-[#2F2F31] line-clamp-1 text-nowrap hover:border-[#555] border-brand-neutral-4 bg-brand-neutral pl-7 text-center`}
+          placeholder="Разрешить гео-спамблок"
+        />
       </div>
     </div>
   );

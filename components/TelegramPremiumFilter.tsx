@@ -3,10 +3,10 @@ import React from "react";
 import { useFiltersStore, IChoose } from "../store/filtersStore";
 import { DimonadsIcon } from "./icons";
 
-const options: IChoose[] = ["Не важно", "Есть", "Нет", "Осталось дней до конца премиума..."];
+const options: IChoose[] = ["Не важно", "Есть", "Нет"];
 
 const TelegramPremiumFilter: React.FC = () => {
-  const { premium, premiumDaysRemaining, updateFilters } = useFiltersStore();
+  const { premium, updateFilters } = useFiltersStore();
   return (
     <div className="bg-brand-neutral-1 border border-brand-neutral-5 rounded-3xl px-8 py-7 min-w-[180px]">
       <div className="flex items-center mb-8 gap-8 pl-6">
@@ -28,15 +28,11 @@ const TelegramPremiumFilter: React.FC = () => {
             </button>
           ))}
         </div>
-        <button
-          type="button"
-          onClick={() => updateFilters({ premium: "Осталось дней до конца премиума..." })}
-          className={`h-16 w-full border text-2xl text-brand-gray-2 outline-none rounded-5xl hover:bg-[#2F2F31] line-clamp-1 text-nowrap hover:border-[#555] cursor-pointer ${
-            premium === "Осталось дней до конца премиума..." ? "bg-[#3C3325] border-[#847050] text-[#DDAB71]" : "border-brand-neutral-4 bg-brand-neutral text-brand-gray-2"
-          }`}
-        >
-          Осталось дней до конца премиума...
-        </button>
+        <input
+          type="number"
+          className={`h-16 w-full border text-2xl text-brand-gray-2 outline-none rounded-5xl hover:bg-[#2F2F31] line-clamp-1 text-nowrap hover:border-[#555] border-brand-neutral-4 bg-brand-neutral pl-7 text-center`}
+          placeholder="Осталось дней до конца премиума..."
+        />
       </div>
     </div>
   );
