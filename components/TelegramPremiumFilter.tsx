@@ -30,7 +30,7 @@ const TelegramPremiumFilter: React.FC = () => {
         </div>
         <input
           type="number"
-          className={`h-16 w-full border text-2xl text-brand-gray-2 outline-none rounded-5xl hover:bg-[#2F2F31] line-clamp-1 text-nowrap hover:border-[#555] border-brand-neutral-4 bg-brand-neutral pl-7 text-center`}
+          className={`h-16 w-full border text-2xl text-brand-gray-2 outline-none rounded-5xl line-clamp-1 text-nowrap hover:border-[#555] border-brand-neutral-4 bg-brand-neutral pl-7 text-center`}
           placeholder="Осталось дней до конца премиума..."
         />
       </div>
