@@ -94,7 +94,7 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
         )}
         <div className="flex-1 min-w-0 flex flex-col">
           {selectedValues.length === 0 ? (
-            <span className="text-[27px] font-light text-brand-gray-2">
+            <span className="text-[27px] font-light text-brand-gray-2 line-clamp-1">
               {placeholder}
             </span>
           ) : (

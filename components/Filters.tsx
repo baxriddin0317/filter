@@ -42,7 +42,7 @@ const Filters: React.FC = () => {
   return (
     <section className={`max-w-10xl mx-auto w-full desktop:px-[105px] laptop:px-[75px] px-6 rounded-5xl overflow-hidden transition-all duration-500 ${showFilters ? 'max-h-[2000px]' : 'max-h-0'}`}>
       <div className={`bg-brand-black border border-brand-black2 rounded-[40px] p-[46px]`}>
-        <div className="grid grid-cols-4 gap-3.5">
+        <div className="grid max-[1920px]:grid-cols-3 grid-cols-4 gap-3.5">
             <PriceFilter />
             <SearchBySeller />
             <AgeFilter />
