@@ -2,7 +2,7 @@
 import React from "react";
 import { useFiltersStore, IChoose } from "../store/filtersStore";
 
-const options: IChoose[] = ["Не важно", "Есть", "Нет"];
+const options: IChoose[] = ["Не важно", "Есть", "Нет", "Разрешить гео-спамблок"];
 
 const SpamblockFilter: React.FC = () => {
   const { spamblock, updateFilters } = useFiltersStore();
@@ -21,19 +21,23 @@ const SpamblockFilter: React.FC = () => {
               type="button"
               key={o}
               onClick={() => updateFilters({ spamblock: o })}
-              className={`h-16 max-w-[234px] w-full border text-2xl text-brand-gray-2 outline-none rounded-5xl hover:bg-[#2F2F31] hover:border-[#555] cursor-pointer ${
-                spamblock === o ? "bg-[#3C3325] border-[#847050] text-[#DDAB71]" : "border-brand-neutral-4 bg-brand-neutral text-brand-gray-2"
+              className={`h-16 max-w-[234px] w-full border text-2xl text-brand-gray-2 outline-none rounded-5xl cursor-pointer ${
+                spamblock === o ? "bg-[#3C3325] border-[#847050] text-[#DDAB71]" : "hover:bg-[#2F2F31] hover:border-[#555] border-brand-neutral-4 bg-brand-neutral text-brand-gray-2"
               }`}
             >
               {o}
             </button>
           ))}
         </div>
-        <input
-          type="number"
-          className={`h-16 w-full border text-2xl text-brand-gray-2 outline-none rounded-5xl line-clamp-1 text-nowrap hover:border-[#555] border-brand-neutral-4 bg-brand-neutral pl-7 text-center`}
-          placeholder="Разрешить гео-спамблок"
-        />
+        <button
+          type="button"
+          onClick={() => updateFilters({ spamblock: "Разрешить гео-спамблок" })}
+          className={`h-16 w-full border text-2xl text-brand-gray-2 outline-none rounded-5xl ] cursor-pointer ${
+            spamblock === "Разрешить гео-спамблок" ? "bg-[#3C3325] border-[#847050] text-[#DDAB71]" : "hover:bg-[#2F2F31] hover:border-[#555] border-brand-neutral-4 bg-brand-neutral text-brand-gray-2"
+          }`}
+        >
+          Разрешить гео-спамблок
+        </button>
       </div>
     </div>
   );

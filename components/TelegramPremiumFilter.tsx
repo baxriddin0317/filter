@@ -20,8 +20,8 @@ const TelegramPremiumFilter: React.FC = () => {
               type="button"
               key={o}
               onClick={() => updateFilters({ premium: o })}
-              className={`h-16 max-w-[234px] w-full border text-2xl text-brand-gray-2 outline-none rounded-5xl hover:bg-[#2F2F31] hover:border-[#555] cursor-pointer ${
-                premium === o ? "bg-[#3C3325] border-[#847050] text-[#DDAB71]" : "border-brand-neutral-4 bg-brand-neutral text-brand-gray-2"
+              className={`h-16 max-w-[234px] w-full border text-2xl text-brand-gray-2 outline-none rounded-5xl cursor-pointer ${
+                premium === o ? "bg-[#3C3325] border-[#847050] text-[#DDAB71]" : "hover:bg-[#2F2F31] hover:border-[#555] border-brand-neutral-4 bg-brand-neutral text-brand-gray-2"
               }`}
             >
               {o}

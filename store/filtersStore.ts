@@ -5,7 +5,7 @@ export interface Range {
   max: number;
 }
 
-export type IChoose = 'Не важно' | 'Есть' | 'Нет';
+export type IChoose = 'Не важно' | 'Есть' | 'Нет' | 'Разрешить гео-спамблок';
 
 export interface FiltersState {
   searchString: string;
