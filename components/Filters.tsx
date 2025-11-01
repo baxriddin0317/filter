@@ -114,8 +114,17 @@ const Filters: React.FC = () => {
                 selectedValues={selectedCountries}
                 onSelectionChange={(values) => updateFilters({ selectedCountries: values })}
               />
-              <div className="col-span-2">
-                
+              <div className="col-span-2 w-full min-h-[90px] bg-brand-neutral-1 border border-brand-neutral-5 rounded-3xl px-4 py-3 flex items-center gap-3 text-left hover:border-brand-neutral-4 transition-colors">
+                <div className="shrink-0 size-[60px] rounded-full bg-brand-neutral flex items-center justify-center text-brand-gray-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width={30} height={25} viewBox="0 0 30 25" fill="none">
+                    <path d="M23.75 11.25H2.5V1.25C2.5 0.56 1.94 0 1.25 0C0.56 0 0 0.56 0 1.25V23.75C0 24.44 0.56 25 1.25 25C1.94 25 2.5 24.44 2.5 23.75V21.25H27.5V23.75C27.5 24.44 28.0588 25 28.75 25C29.4412 25 30 24.44 30 23.75V17.5C30 14.0538 27.1963 11.25 23.75 11.25Z" fill="#9F9F9F" />
+                  </svg>
+                </div>
+                <div className="text-brand-white text-2xl">
+                  <span>Фильтровать по минимальной отлёжке аккаунта от</span>
+                  <input type="number" className="py-1.5 w-[100px] border border-brand-neutral-4 bg-brand-neutral text-2xl text-brand-gray-2 outline-none rounded-5xl px-6 mx-[18px] text-center" placeholder="[N]" />
+                  <span>дней</span>
+                </div>
               </div>
             </div>
             <TelegramPremiumFilter />
