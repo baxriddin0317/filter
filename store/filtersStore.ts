@@ -40,9 +40,11 @@ export interface FiltersState {
   seller_username: string;
   // UI state
   showFilters: boolean;
+  searchTrigger: number; // Trigger for search action
   updateFilters: (fields: Partial<FiltersState>) => void;
   resetFilters: () => void;
   toggleShowFilters: () => void;
+  triggerSearch: () => void;
 }
 
 const defaultState = {
@@ -77,6 +79,7 @@ const defaultState = {
   isFiltersChanged: false,
   seller_username: '',
   showFilters: true,
+  searchTrigger: 0,
 };
 
 export const useFiltersStore = create<FiltersState>((set, get) => ({
@@ -84,4 +87,5 @@ export const useFiltersStore = create<FiltersState>((set, get) => ({
   updateFilters: (fields) => set((state) => ({ ...state, ...fields, isFiltersChanged: true })),
   resetFilters: () => set({ ...defaultState }),
   toggleShowFilters: () => set((state) => ({ showFilters: !state.showFilters })),
+  triggerSearch: () => set((state) => ({ searchTrigger: state.searchTrigger + 1 })),
 }));
