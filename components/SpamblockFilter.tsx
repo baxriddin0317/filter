@@ -31,9 +31,14 @@ const SpamblockFilter: React.FC = () => {
         </div>
         <button
           type="button"
+          disabled={spamblock === "Нет"}
           onClick={() => updateFilters({ spamblock: "Разрешить гео-спамблок" })}
-          className={`h-16 w-full border text-2xl text-brand-gray-2 outline-none rounded-5xl ] cursor-pointer ${
-            spamblock === "Разрешить гео-спамблок" ? "bg-[#3C3325] border-[#847050] text-[#DDAB71]" : "hover:bg-[#2F2F31] hover:border-[#555] border-brand-neutral-4 bg-brand-neutral text-brand-gray-2"
+          className={`h-16 w-full border text-2xl text-brand-gray-2 outline-none rounded-5xl ${
+            spamblock === "Разрешить гео-спамблок" 
+              ? "bg-[#3C3325] border-[#847050] text-[#DDAB71] cursor-pointer" 
+              : spamblock === "Нет"
+              ? "border-brand-neutral-4 bg-brand-neutral text-brand-gray-2 cursor-not-allowed opacity-50"
+              : "hover:bg-[#2F2F31] hover:border-[#555] border-brand-neutral-4 bg-brand-neutral text-brand-gray-2 cursor-pointer"
           }`}
         >
           Разрешить гео-спамблок
