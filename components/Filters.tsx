@@ -18,7 +18,7 @@ import { useFiltersStore } from "../store/filtersStore";
 import AdminchatFilter from "./AdminchatFilter";
 
 const Filters: React.FC = () => {
-  const { showFilters, selectedOrigins, selectedCountries, selectedMinusOrigins, excludedCountries, updateFilters, age } = useFiltersStore();
+  const { showFilters, selectedOrigins, selectedCountries, selectedMinusOrigins, excludedCountries, updateFilters, minDormancyDays } = useFiltersStore();
 
   // Origin items with IDs for backend
   const originItems = [
@@ -122,8 +122,8 @@ const Filters: React.FC = () => {
                   <span>Фильтровать по минимальной отлёжке аккаунта от</span>
                   <input 
                     type="number" 
-                    value={age?.min || ''} 
-                    onChange={(e) => updateFilters({ age: { ...age, min: e.target.value ? Number(e.target.value) : 0 } })} 
+                    value={minDormancyDays || ''} 
+                    onChange={(e) => updateFilters({ minDormancyDays: e.target.value ? Number(e.target.value) : 0 })} 
                     className="py-1.5 w-[100px] border border-brand-neutral-4 bg-brand-neutral text-2xl text-brand-gray-2 outline-none rounded-5xl px-6 mx-[18px] text-center" 
                     placeholder="[N]" 
                     min={0}

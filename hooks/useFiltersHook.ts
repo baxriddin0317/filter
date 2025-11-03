@@ -204,6 +204,13 @@ export const useFiltersHook = () => {
       params.delete("premiumDaysRemaining");
     }
 
+    // Minimum account dormancy days (separate from age)
+    if (currentFilters.minDormancyDays && currentFilters.minDormancyDays > 0) {
+      params.set("minDormancyDays", currentFilters.minDormancyDays.toString());
+    } else {
+      params.delete("minDormancyDays");
+    }
+
     // Arrays - convert string values to IDs before sending to URL (comma-separated format)
     if (currentFilters.selectedCountries.length > 0) {
       const countryIds = convertCountryValuesToIds(currentFilters.selectedCountries);
@@ -335,6 +342,12 @@ export const useFiltersHook = () => {
     const premiumDaysRemaining = searchParams.get("premiumDaysRemaining");
     if (premiumDaysRemaining !== null && filters.premiumDaysRemaining === 0) {
       urlFilters.premiumDaysRemaining = Number(premiumDaysRemaining);
+    }
+
+    // Minimum account dormancy days (separate from age)
+    const minDormancyDays = searchParams.get("minDormancyDays");
+    if (minDormancyDays !== null && filters.minDormancyDays === 0) {
+      urlFilters.minDormancyDays = Number(minDormancyDays);
     }
 
     // Arrays - convert comma-separated IDs from URL back to string values

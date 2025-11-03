@@ -16,6 +16,8 @@ export interface FiltersState {
   channels: Range;
   price: Range;
   age: Range;
+  // Separate from `age`: minimum dormancy (idle) days of account
+  minDormancyDays: number;
   idDigits: Range;
   telegramStars: Range;
   adminChannels: Range;
@@ -57,6 +59,7 @@ const defaultState = {
   channels: { min: 0, max: 0 },
   price: { min: 0, max: 0 },
   age: { min: 0, max: 0 },
+  minDormancyDays: 0,
   idDigits: { min: 0, max: 0 },
   telegramStars: { min: 0, max: 0 },
   adminChannels: { min: 0, max: 0 },
