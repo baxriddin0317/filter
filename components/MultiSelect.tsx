@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from "react";
 export interface MultiSelectItem {
   value: string;
   label: string;
+  id?: number; // ID for backend (e.g., USA = 840)
   flag?: string;
 }
 

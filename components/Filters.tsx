@@ -18,26 +18,28 @@ import { useFiltersStore } from "../store/filtersStore";
 import AdminchatFilter from "./AdminchatFilter";
 
 const Filters: React.FC = () => {
-  const { showFilters, selectedOrigins, selectedCountries, selectedMinusOrigins, excludedCountries, updateFilters } = useFiltersStore();
+  const { showFilters, selectedOrigins, selectedCountries, selectedMinusOrigins, excludedCountries, updateFilters, age } = useFiltersStore();
 
+  // Origin items with IDs for backend
   const originItems = [
-    { value: 'not_important', label: 'Не важно' },
-    { value: 'brute', label: 'Брут' },
-    { value: 'phishing', label: 'ФИШИНГ' },
-    { value: 'other', label: 'Другое' },
+    { value: 'not_important', label: 'Не важно', id: 0 },
+    { value: 'brute', label: 'Брут', id: 1 },
+    { value: 'phishing', label: 'ФИШИНГ', id: 2 },
+    { value: 'other', label: 'Другое', id: 3 },
   ];
 
+  // Country items with IDs for backend (USA = 840 as example)
   const countryItems = [
-    { value: 'usa', label: 'США' },
-    { value: 'russia', label: 'Россия' },
-    { value: 'ukraine', label: 'Украина' },
-    { value: 'kazakhstan', label: 'Казахстан' },
-    { value: 'uzbekistan', label: 'Узбекистан' },
-    { value: 'iraq', label: 'Ирак' },
-    { value: 'germany', label: 'Германия' },
-    { value: 'france', label: 'Франция' },
-    { value: 'uk', label: 'Великобритания' },
-    { value: 'china', label: 'Китай' },
+    { value: 'usa', label: 'США', id: 840 },
+    { value: 'russia', label: 'Россия', id: 643 }, // Russia ISO code
+    { value: 'ukraine', label: 'Украина', id: 380 }, // Ukraine ISO code
+    { value: 'kazakhstan', label: 'Казахстан', id: 398 }, // Kazakhstan ISO code
+    { value: 'uzbekistan', label: 'Узбекистан', id: 860 }, // Uzbekistan ISO code
+    { value: 'iraq', label: 'Ирак', id: 368 }, // Iraq ISO code
+    { value: 'germany', label: 'Германия', id: 276 }, // Germany ISO code
+    { value: 'france', label: 'Франция', id: 250 }, // France ISO code
+    { value: 'uk', label: 'Великобритания', id: 826 }, // UK ISO code
+    { value: 'china', label: 'Китай', id: 156 }, // China ISO code
   ];
   return (
     <section className={`max-w-10xl mx-auto w-full desktop:px-[105px] laptop:px-[75px] px-6 rounded-5xl overflow-hidden transition-all duration-500 ${showFilters ? 'max-h-[2000px]' : 'max-h-0'}`}>
@@ -118,7 +120,14 @@ const Filters: React.FC = () => {
                 </div>
                 <div className="text-brand-white text-2xl">
                   <span>Фильтровать по минимальной отлёжке аккаунта от</span>
-                  <input type="number" className="py-1.5 w-[100px] border border-brand-neutral-4 bg-brand-neutral text-2xl text-brand-gray-2 outline-none rounded-5xl px-6 mx-[18px] text-center" placeholder="[N]" />
+                  <input 
+                    type="number" 
+                    value={age?.min || ''} 
+                    onChange={(e) => updateFilters({ age: { ...age, min: e.target.value ? Number(e.target.value) : 0 } })} 
+                    className="py-1.5 w-[100px] border border-brand-neutral-4 bg-brand-neutral text-2xl text-brand-gray-2 outline-none rounded-5xl px-6 mx-[18px] text-center" 
+                    placeholder="[N]" 
+                    min={0}
+                  />
                   <span>дней</span>
                 </div>
               </div>

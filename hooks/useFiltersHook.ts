@@ -3,6 +3,59 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { useFiltersStore, IChoose, Range } from "../store/filtersStore";
 
+// Country and Origin ID mappings (matching Filters.tsx)
+const countryIdMapping: Record<string, number> = {
+  'usa': 840,
+  'russia': 643,
+  'ukraine': 380,
+  'kazakhstan': 398,
+  'uzbekistan': 860,
+  'iraq': 368,
+  'germany': 276,
+  'france': 250,
+  'uk': 826,
+  'china': 156,
+};
+
+const originIdMapping: Record<string, number> = {
+  'not_important': 0,
+  'brute': 1,
+  'phishing': 2,
+  'other': 3,
+};
+
+const convertCountryValuesToIds = (values: string[]): number[] => {
+  return values
+    .map(value => countryIdMapping[value])
+    .filter(id => id !== undefined);
+};
+
+const convertOriginValuesToIds = (values: string[]): number[] => {
+  return values
+    .map(value => originIdMapping[value])
+    .filter(id => id !== undefined);
+};
+
+const convertCountryIdsToValues = (ids: number[]): string[] => {
+  const reverseMapping: Record<number, string> = {};
+  Object.entries(countryIdMapping).forEach(([value, id]) => {
+    reverseMapping[id] = value;
+  });
+  return ids
+    .map(id => reverseMapping[id])
+    .filter(value => value !== undefined);
+};
+
+const convertOriginIdsToValues = (ids: number[]): string[] => {
+  const reverseMapping: Record<number, string> = {};
+  Object.entries(originIdMapping).forEach(([value, id]) => {
+    reverseMapping[id] = value;
+  });
+  return ids
+    .map(id => reverseMapping[id])
+    .filter(value => value !== undefined);
+};
+
 // Helper function to convert IChoose string to URL format
 const chooseToUrlValue = (value: IChoose): string => {
   if (value === "Есть") return "1";
@@ -82,9 +135,17 @@ export const useFiltersHook = () => {
     }
 
     if (currentFilters.spamblock !== "Не важно") {
-      params.set("spamblock", chooseToUrlValue(currentFilters.spamblock));
+      // If "Разрешить гео-спамблок" is selected, set allow_geo=1
+      if (currentFilters.spamblock === "Разрешить гео-спамблок") {
+        params.set("allow_geo", "1");
+        params.delete("spamblock"); // Don't set spamblock parameter
+      } else {
+        params.set("spamblock", chooseToUrlValue(currentFilters.spamblock));
+        params.delete("allow_geo"); // Remove allow_geo if other option selected
+      }
     } else {
       params.delete("spamblock");
+      params.delete("allow_geo");
     }
 
     if (currentFilters.two_fa !== "Не важно") {
@@ -136,27 +197,38 @@ export const useFiltersHook = () => {
       params.delete("seller_username");
     }
 
-    // Arrays
+    // Premium days remaining
+    if (currentFilters.premiumDaysRemaining > 0) {
+      params.set("premiumDaysRemaining", currentFilters.premiumDaysRemaining.toString());
+    } else {
+      params.delete("premiumDaysRemaining");
+    }
+
+    // Arrays - convert string values to IDs before sending to URL (comma-separated format)
     if (currentFilters.selectedCountries.length > 0) {
-      params.set("selectedCountries", JSON.stringify(currentFilters.selectedCountries));
+      const countryIds = convertCountryValuesToIds(currentFilters.selectedCountries);
+      params.set("selectedCountries", countryIds.join(","));
     } else {
       params.delete("selectedCountries");
     }
 
     if (currentFilters.selectedOrigins.length > 0) {
-      params.set("selectedOrigins", JSON.stringify(currentFilters.selectedOrigins));
+      const originIds = convertOriginValuesToIds(currentFilters.selectedOrigins);
+      params.set("selectedOrigins", originIds.join(","));
     } else {
       params.delete("selectedOrigins");
     }
 
     if (currentFilters.selectedMinusOrigins.length > 0) {
-      params.set("selectedMinusOrigins", JSON.stringify(currentFilters.selectedMinusOrigins));
+      const originIds = convertOriginValuesToIds(currentFilters.selectedMinusOrigins);
+      params.set("selectedMinusOrigins", originIds.join(","));
     } else {
       params.delete("selectedMinusOrigins");
     }
 
     if (currentFilters.excludedCountries.length > 0) {
-      params.set("excludedCountries", JSON.stringify(currentFilters.excludedCountries));
+      const countryIds = convertCountryValuesToIds(currentFilters.excludedCountries);
+      params.set("excludedCountries", countryIds.join(","));
     } else {
       params.delete("excludedCountries");
     }
@@ -207,9 +279,15 @@ export const useFiltersHook = () => {
       urlFilters.premium = urlValueToChoose(premium);
     }
 
-    const spamblock = searchParams.get("spamblock");
-    if (spamblock !== null && filters.spamblock === "Не важно") {
-      urlFilters.spamblock = urlValueToChoose(spamblock);
+    // Check for allow_geo parameter first (Разрешить гео-спамблок)
+    const allowGeo = searchParams.get("allow_geo");
+    if (allowGeo === "1" && filters.spamblock === "Не важно") {
+      urlFilters.spamblock = "Разрешить гео-спамблок";
+    } else {
+      const spamblock = searchParams.get("spamblock");
+      if (spamblock !== null && filters.spamblock === "Не важно") {
+        urlFilters.spamblock = urlValueToChoose(spamblock);
+      }
     }
 
     const two_fa = searchParams.get("two_fa");
@@ -253,11 +331,32 @@ export const useFiltersHook = () => {
       urlFilters.seller_username = seller_username;
     }
 
-    // Arrays
+    // Premium days remaining
+    const premiumDaysRemaining = searchParams.get("premiumDaysRemaining");
+    if (premiumDaysRemaining !== null && filters.premiumDaysRemaining === 0) {
+      urlFilters.premiumDaysRemaining = Number(premiumDaysRemaining);
+    }
+
+    // Arrays - convert comma-separated IDs from URL back to string values
     const selectedCountries = searchParams.get("selectedCountries");
     if (selectedCountries !== null) {
       try {
-        urlFilters.selectedCountries = JSON.parse(selectedCountries);
+        // Support both comma-separated format (new) and JSON format (legacy)
+        if (selectedCountries.startsWith('[')) {
+          // Legacy JSON format
+          const countryIds = JSON.parse(selectedCountries);
+          if (Array.isArray(countryIds) && countryIds.length > 0 && typeof countryIds[0] === 'number') {
+            urlFilters.selectedCountries = convertCountryIdsToValues(countryIds);
+          } else {
+            urlFilters.selectedCountries = countryIds;
+          }
+        } else {
+          // New comma-separated format: "840,643"
+          const countryIds = selectedCountries.split(',').map(id => Number(id.trim())).filter(id => !isNaN(id));
+          if (countryIds.length > 0) {
+            urlFilters.selectedCountries = convertCountryIdsToValues(countryIds);
+          }
+        }
       } catch (e) {
         // Ignore parse errors
       }
@@ -266,7 +365,22 @@ export const useFiltersHook = () => {
     const selectedOrigins = searchParams.get("selectedOrigins");
     if (selectedOrigins !== null) {
       try {
-        urlFilters.selectedOrigins = JSON.parse(selectedOrigins);
+        // Support both comma-separated format (new) and JSON format (legacy)
+        if (selectedOrigins.startsWith('[')) {
+          // Legacy JSON format
+          const originIds = JSON.parse(selectedOrigins);
+          if (Array.isArray(originIds) && originIds.length > 0 && typeof originIds[0] === 'number') {
+            urlFilters.selectedOrigins = convertOriginIdsToValues(originIds);
+          } else {
+            urlFilters.selectedOrigins = originIds;
+          }
+        } else {
+          // New comma-separated format: "1,2"
+          const originIds = selectedOrigins.split(',').map(id => Number(id.trim())).filter(id => !isNaN(id));
+          if (originIds.length > 0) {
+            urlFilters.selectedOrigins = convertOriginIdsToValues(originIds);
+          }
+        }
       } catch (e) {
         // Ignore parse errors
       }
@@ -275,7 +389,22 @@ export const useFiltersHook = () => {
     const selectedMinusOrigins = searchParams.get("selectedMinusOrigins");
     if (selectedMinusOrigins !== null) {
       try {
-        urlFilters.selectedMinusOrigins = JSON.parse(selectedMinusOrigins);
+        // Support both comma-separated format (new) and JSON format (legacy)
+        if (selectedMinusOrigins.startsWith('[')) {
+          // Legacy JSON format
+          const originIds = JSON.parse(selectedMinusOrigins);
+          if (Array.isArray(originIds) && originIds.length > 0 && typeof originIds[0] === 'number') {
+            urlFilters.selectedMinusOrigins = convertOriginIdsToValues(originIds);
+          } else {
+            urlFilters.selectedMinusOrigins = originIds;
+          }
+        } else {
+          // New comma-separated format: "1,2"
+          const originIds = selectedMinusOrigins.split(',').map(id => Number(id.trim())).filter(id => !isNaN(id));
+          if (originIds.length > 0) {
+            urlFilters.selectedMinusOrigins = convertOriginIdsToValues(originIds);
+          }
+        }
       } catch (e) {
         // Ignore parse errors
       }
@@ -284,7 +413,22 @@ export const useFiltersHook = () => {
     const excludedCountries = searchParams.get("excludedCountries");
     if (excludedCountries !== null) {
       try {
-        urlFilters.excludedCountries = JSON.parse(excludedCountries);
+        // Support both comma-separated format (new) and JSON format (legacy)
+        if (excludedCountries.startsWith('[')) {
+          // Legacy JSON format
+          const countryIds = JSON.parse(excludedCountries);
+          if (Array.isArray(countryIds) && countryIds.length > 0 && typeof countryIds[0] === 'number') {
+            urlFilters.excludedCountries = convertCountryIdsToValues(countryIds);
+          } else {
+            urlFilters.excludedCountries = countryIds;
+          }
+        } else {
+          // New comma-separated format: "840,643"
+          const countryIds = excludedCountries.split(',').map(id => Number(id.trim())).filter(id => !isNaN(id));
+          if (countryIds.length > 0) {
+            urlFilters.excludedCountries = convertCountryIdsToValues(countryIds);
+          }
+        }
       } catch (e) {
         // Ignore parse errors
       }

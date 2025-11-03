@@ -27,6 +27,7 @@ export interface FiltersState {
   channelsAndChatsChannels: Range;
   channelsAndChatsChats: Range;
   premium: IChoose;
+  premiumDaysRemaining: number; // Days remaining until premium ends
   spamblock: IChoose;
   two_fa: IChoose;
   with_admin_channels: IChoose;
@@ -67,6 +68,7 @@ const defaultState = {
   channelsAndChatsChannels: { min: 0, max: 0 },
   channelsAndChatsChats: { min: 0, max: 0 },
   premium: 'Не важно' as IChoose,
+  premiumDaysRemaining: 0,
   spamblock: 'Не важно' as IChoose,
   two_fa: 'Не важно' as IChoose,
   with_admin_channels: 'Не важно' as IChoose,

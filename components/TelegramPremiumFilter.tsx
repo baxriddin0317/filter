@@ -6,7 +6,7 @@ import { DimonadsIcon } from "./icons";
 const options: IChoose[] = ["Не важно", "Есть", "Нет"];
 
 const TelegramPremiumFilter: React.FC = () => {
-  const { premium, updateFilters } = useFiltersStore();
+  const { premium, premiumDaysRemaining, updateFilters } = useFiltersStore();
   return (
     <div className="bg-brand-neutral-1 border border-brand-neutral-5 rounded-3xl px-8 py-7 min-w-[180px]">
       <div className="flex items-center mb-8 gap-8 pl-6">
@@ -30,8 +30,11 @@ const TelegramPremiumFilter: React.FC = () => {
         </div>
         <input
           type="number"
+          value={premiumDaysRemaining || ''}
+          onChange={(e) => updateFilters({ premiumDaysRemaining: e.target.value ? Number(e.target.value) : 0 })}
           className={`h-16 w-full border text-2xl text-brand-gray-2 outline-none rounded-5xl line-clamp-1 text-nowrap hover:border-[#555] border-brand-neutral-4 bg-brand-neutral pl-7 text-center`}
           placeholder="Осталось дней до конца премиума..."
+          min={0}
         />
       </div>
     </div>

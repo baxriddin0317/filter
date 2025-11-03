@@ -124,6 +124,7 @@ function HomeContent() {
       channelsAndChatsChannels: { ...filters.channelsAndChatsChannels },
       channelsAndChatsChats: { ...filters.channelsAndChatsChats },
       premium: filters.premium,
+      premiumDaysRemaining: filters.premiumDaysRemaining,
       spamblock: filters.spamblock,
       two_fa: filters.two_fa,
       with_admin_channels: filters.with_admin_channels,
